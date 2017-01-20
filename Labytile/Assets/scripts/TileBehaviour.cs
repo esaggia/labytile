@@ -6,6 +6,7 @@ public class TileBehaviour : MonoBehaviour
     public float playerViewRange = 20.0f;
     public Transform player = null;
     public float elevation = 30.0f;
+    public float elevationSpeed = 5.0f;
 
     private bool isElevated = false;
     private float initialHeight = 0.0f;
@@ -22,16 +23,22 @@ public class TileBehaviour : MonoBehaviour
 	void Update () 
     {
         Vector3 playerPos = player.position;
+        float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(playerPos.x, playerPos.z));
 
-        if (!isElevated && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(playerPos.x, playerPos.z)) > playerViewRange)
+        if (!isElevated && dist > playerViewRange)
         {
             isElevated = true;
             transform.position += new Vector3(0.0f, elevation, 0.0f);
         }
-        else if (isElevated && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(playerPos.x, playerPos.z)) < playerViewRange)
+        else if (isElevated && dist < playerViewRange)
         {
             isElevated = false;
             transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
         }
 	}
+
+    IEnumerator Elevation()
+    {
+        yield return null;
+    }
 }
