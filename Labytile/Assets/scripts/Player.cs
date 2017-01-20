@@ -14,25 +14,26 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
     {
-
-       
-
-
-        if (Input.GetButton("Horizontal"))
+       if (Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0) 
         {
-            Vector3 movement = new Vector3(velocityX, 0.0f, 0.0f);
-            transform.position += movement;
-
-
-        }
-        if (Input.GetButton("Vertical"))
+        Vector3 movementR = new Vector3(velocityX,0.0f ,0.0f);
+        transform.position += movementR;
+        } 
+        else if (Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") < 0)
         {
-            Vector3 movement = new Vector3(0.0f,0.0f , velocityZ);
-            transform.position += movement;
-
+        Vector3 movementL = new Vector3(velocityX,0.0f ,0.0f );
+        transform.position -= movementL;
         }
-
-      
-	
+ 
+        if (Input.GetButton("Vertical") && Input.GetAxisRaw("Vertical") < 0)
+        {   
+            Vector3 movementR = new Vector3(0.0f,0.0f , velocityZ);
+            transform.position -= movementR;
+        }
+         else if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0) 
+         { 
+            Vector3 movementL = new Vector3(0.0f,0.0f , velocityZ);
+            transform.position += movementL;
+         }
 	}
 }
