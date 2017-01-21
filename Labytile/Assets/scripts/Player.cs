@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
 
     public int indexX = 0;
     public int indexZ = 0;
+
+    public int viewRange = 1;
     
 	// Use this for initialization
 	void Start () 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class basicTile : MonoBehaviour {
 
-    public int playerViewRange = 1;
+    //public int playerViewRange = 1;
     //public Transform player = null;
 
     public int indexX = 0;

@@ -21,7 +21,7 @@ public class movingTile : basicTile
         int diffX = Mathf.Abs(varManager.player.indexX - indexX);
         int diffZ = Mathf.Abs(varManager.player.indexZ - indexZ);
 
-        if ((diffX <= playerViewRange && varManager.player.indexZ == indexZ) || (diffZ <= playerViewRange && varManager.player.indexX == indexX))
+        if ((diffX <= varManager.player.viewRange && diffZ <= varManager.player.viewRange) || indexX == varManager.player.indexX && indexZ == varManager.player.indexZ)
         {
             //isElevated = false;
             transform.position = new Vector3(transform.position.x, initialHeight - elevation, transform.position.z);
