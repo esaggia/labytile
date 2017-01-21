@@ -18,9 +18,10 @@ public class movingTile : basicTile
 	// Update is called once per frame
     void Update()
     {
-        //Vector2 dist = varManager.GetPlayerIndex();
+        int diffX = Mathf.Abs(varManager.player.indexX - indexX);
+        int diffZ = Mathf.Abs(varManager.player.indexZ - indexZ);
 
-        if ((Mathf.Abs(varManager.player.indexX - indexX) <= playerViewRange || Mathf.Abs(varManager.player.indexZ - indexZ) <= playerViewRange))
+        if ((diffX <= playerViewRange && varManager.player.indexZ == indexZ) || (diffZ <= playerViewRange && varManager.player.indexX == indexX))
         {
             //isElevated = false;
             transform.position = new Vector3(transform.position.x, initialHeight - elevation, transform.position.z);
