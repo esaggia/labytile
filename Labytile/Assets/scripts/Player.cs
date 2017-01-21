@@ -4,6 +4,9 @@ using System.Collections;
 public class Player : MonoBehaviour {
     public float velocityX;
     public float velocityZ;
+
+    public int indexX = 0;
+    public int indexZ = 0;
     
 	// Use this for initialization
 	void Start () {
@@ -35,5 +38,7 @@ public class Player : MonoBehaviour {
             Vector3 movementL = new Vector3(0.0f,0.0f , velocityZ);
             transform.position += movementL;
          }
+
+        varManager.GetPlayerIndex();
 	}
 }
