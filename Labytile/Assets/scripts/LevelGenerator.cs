@@ -7,6 +7,7 @@ public class LevelGenerator : MonoBehaviour {
     public GameObject movingTile = null;
     public GameObject staticTile = null;
     public GameObject playerObject = null;
+    public GameObject portalObject = null;
 
     public Player GetPlayer() { return player; }
 
@@ -19,6 +20,7 @@ public class LevelGenerator : MonoBehaviour {
         Color[] pixels = levelTexture.GetPixels();
 
         SpawnTiles(pixels);
+        SpawnPortal(pixels);
         SpawnPlayer(pixels);
         
 
@@ -70,6 +72,33 @@ public class LevelGenerator : MonoBehaviour {
         }
     }
 
+    void SpawnPortal(Color[] pixels)
+    {
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            int indexX = i % levelTexture.width;
+            int indexZ = i / levelTexture.width;
+
+            if (pixels[i].a == 1)
+            {
+                basicTile tile = GetTileWithIndex(indexX, indexZ);
+                Transform spawnPoint = tile.transform.GetChild(0);
+
+                GameObject portal = Instantiate(portalObject,spawnPoint.position,spawnPoint.rotation) as GameObject;
+                portal.transform.SetParent(spawnPoint);
+
+
+                return;
+            }
+            else
+            {
+                Debug.Log(pixels[i].a);
+            }
+        }
+
+ 
+    }
+
     Player SpawnPlayer(Color[] pixels)
     {
         for (int i = 0; i < pixels.Length; i++)
@@ -103,8 +132,8 @@ public class LevelGenerator : MonoBehaviour {
                 return playerComp;
             }
 
-          else
-              Debug.Log(pixels[i].b);
+          //else
+          //    Debug.Log(pixels[i].b);
         }
 
         Debug.Log("no tile found 2");
