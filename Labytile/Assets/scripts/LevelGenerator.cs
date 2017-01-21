@@ -103,8 +103,8 @@ public class LevelGenerator : MonoBehaviour {
                 return playerComp;
             }
 
-           //else
-           //    Debug.Log(pixels[i].b);
+          else
+              Debug.Log(pixels[i].b);
         }
 
         Debug.Log("no tile found 2");

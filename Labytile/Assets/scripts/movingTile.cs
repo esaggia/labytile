@@ -12,7 +12,7 @@ public class movingTile : basicTile
 	protected override void Start ()
     {
         base.Start();
-        Debug.Log(initialHeight);
+        //Debug.Log(initialHeight);
 	}
 	
 	// Update is called once per frame
@@ -24,15 +24,16 @@ public class movingTile : basicTile
         if ((diffX <= varManager.player.viewRange && diffZ <= varManager.player.viewRange) || indexX == varManager.player.indexX && indexZ == varManager.player.indexZ)
         {
             //isElevated = false;
-            //transform.position = new Vector3(transform.position.x, initialHeight - elevation, transform.position.z);
-            StopCoroutine(MoveUpWards());
-            StartCoroutine(MoveDownWards());
+            transform.position = new Vector3(transform.position.x, initialHeight - elevation, transform.position.z);
+            //StopCoroutine(MoveUpWards());
+            //StartCoroutine(MoveDownWards());
         }
         else //if (!isElevated && (Mathf.Abs(varManager.player.indexX - indexX) > playerViewRange || Mathf.Abs(varManager.player.indexZ - indexZ) > playerViewRange))
         {
             //isElevated = true;
-            StopCoroutine(MoveDownWards());
-            StartCoroutine(MoveUpWards());
+            transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
+            //StopCoroutine(MoveDownWards());
+            //StartCoroutine(MoveUpWards());
         }
     }
 
