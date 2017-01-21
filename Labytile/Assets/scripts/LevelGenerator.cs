@@ -12,46 +12,21 @@ public class LevelGenerator : MonoBehaviour {
 
     private Player player = null;
 
-    private basicTile[] tiles;
-
 	// Use this for initialization
 	void Start () 
     {
 
         Color[] pixels = levelTexture.GetPixels();
 
-        tiles = new basicTile[pixels.Length];
-        int tileCounter = 0;
-
-        for (int i = 0; i < pixels.Length;i++)
-        {
-            int indexX = i % levelTexture.width;
-            int indexZ = i / levelTexture.width;
-
-            if (pixels[i].r == 0) // tiles 
-            {
-                basicTile tile = SpawnTile(movingTile, indexX, indexZ);
-                tiles[tileCounter] = tile;
-                tileCounter++;
-            }
-            else
-            {
-                basicTile tile = SpawnTile(staticTile, indexX, indexZ);
-                tiles[tileCounter] = tile;
-                tileCounter++;
-            }
+        SpawnTiles(pixels);
+        SpawnPlayer(pixels);
+        
 
             //if (pixels[i].g == 1) // spawn d'ennemi
             //    SpawnTile(movingTile, indexX, indexZ);
             //
-            if (pixels[i].b == 1) // spawn joueur
-                SpawnPlayer(indexX, indexZ);
-            //
             //    if (pixels[i].a == 1) { }// 
             //    SpawnTile(movingTile, indexX, indexZ);
-
-        }
-	
 	}
 	
 	// Update is called once per frame
@@ -70,27 +45,77 @@ public class LevelGenerator : MonoBehaviour {
         return tileComp;
     }
 
-    Player SpawnPlayer(int indexX, int indexZ)
+    void SpawnTiles(Color[] pixels)
     {
-        basicTile tile = GetTileWithIndex(indexX,indexZ);
-        Transform spawnPoint = tile.transform.GetChild(0);
+        varManager.tiles = new basicTile[pixels.Length];
+        int tileCounter = 0;
 
-        GameObject player = Instantiate(playerObject, spawnPoint.position, spawnPoint.rotation) as  GameObject;
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            int indexX = i % levelTexture.width;
+            int indexZ = i / levelTexture.width;
 
-        Player playerComp = player.GetComponent<Player>();
+            if (pixels[i].r == 0) // tiles 
+            {
+                basicTile tile = SpawnTile(movingTile, indexX, indexZ);
+                varManager.tiles[tileCounter] = tile;
+                tileCounter++;
+            }
+            else
+            {
+                basicTile tile = SpawnTile(staticTile, indexX, indexZ);
+                varManager.tiles[tileCounter] = tile;
+                tileCounter++;
+            }
+        }
+    }
 
-        varManager.player = playerComp;
+    Player SpawnPlayer(Color[] pixels)
+    {
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            int indexX = i % levelTexture.width;
+            int indexZ = i / levelTexture.width;
 
-        return playerComp;
+
+            if (pixels[i].b == 1) // spawn joueur
+            {
+                Debug.Log(indexX + " " + indexZ);
+                basicTile tile = GetTileWithIndex(indexX, indexZ);
+
+                if (tile == null)
+                {
+                    Debug.Log("no tile found 1");
+                    return null;
+                }
+
+                Transform spawnPoint = tile.transform.GetChild(0);
+
+                GameObject player = Instantiate(playerObject, spawnPoint.position, spawnPoint.rotation) as GameObject;
+
+                Player playerComp = player.GetComponent<Player>();
+
+                playerComp.indexX = indexX;
+                playerComp.indexZ = indexZ;
+                varManager.player = playerComp;
+
+                return playerComp;
+            }
+        }
+
+        Debug.Log("no tile found 2");
+        return null;
     }
 
     basicTile GetTileWithIndex(int indexX, int indexZ)
     {
         basicTile tileToReturn = null;
 
-        foreach (basicTile tile in tiles)
+        foreach (basicTile tile in varManager.tiles)
         {
-            tileToReturn = tile.indexX == indexX ? (tile.indexZ == indexZ ? tile : null) : null;
+            if (tile.indexX == indexZ && tile.indexZ == indexZ)
+                tileToReturn = tile;
+
         }
 
         return tileToReturn;

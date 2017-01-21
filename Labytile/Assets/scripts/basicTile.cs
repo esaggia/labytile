@@ -3,7 +3,7 @@ using System.Collections;
 
 public class basicTile : MonoBehaviour {
 
-    public float playerViewRange = 20.0f;
+    public int playerViewRange = 1;
     //public Transform player = null;
 
     public int indexX = 0;
@@ -29,7 +29,7 @@ public class basicTile : MonoBehaviour {
     {
 
         float dist = 0.0f;
-        dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(varManager.player.transform.position.x, varManager.player.transform.position.z));
+       // dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(varManager.player.transform.position.x, varManager.player.transform.position.z));
 
         return dist;
     }
