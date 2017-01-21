@@ -77,11 +77,10 @@ public class LevelGenerator : MonoBehaviour {
             int indexX = i % levelTexture.width;
             int indexZ = i / levelTexture.width;
 
-
             if (pixels[i].b == 1) // spawn joueur
             {
-                Debug.Log(indexX + " " + indexZ);
                 basicTile tile = GetTileWithIndex(indexX, indexZ);
+                Debug.Log(tile.indexX + " " + tile.indexZ + " = spawn du joueur");
 
                 if (tile == null)
                 {
@@ -99,8 +98,13 @@ public class LevelGenerator : MonoBehaviour {
                 playerComp.indexZ = indexZ;
                 varManager.player = playerComp;
 
+                //Debug.Log(spawnPoint.parent.GetComponent<basicTile>().indexX);
+
                 return playerComp;
             }
+
+           //else
+           //    Debug.Log(pixels[i].b);
         }
 
         Debug.Log("no tile found 2");
@@ -113,9 +117,8 @@ public class LevelGenerator : MonoBehaviour {
 
         foreach (basicTile tile in varManager.tiles)
         {
-            if (tile.indexX == indexZ && tile.indexZ == indexZ)
+            if (tile.indexX == indexX && tile.indexZ == indexZ)
                 tileToReturn = tile;
-
         }
 
         return tileToReturn;
