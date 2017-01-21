@@ -9,7 +9,8 @@ public class Player : MonoBehaviour {
     public int indexZ = 0;
     
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 
 	
 	}
@@ -17,28 +18,36 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
     {
-     if( Input.GetKey( KeyCode.UpArrow ) )
+     if( Input.GetKey( KeyCode.RightArrow ) )
         {
         Vector3 movementR = new Vector3(velocityX,0.0f ,0.0f);
         transform.position += movementR;
+
+        varManager.FindPlayerIndex();
         } 
-        else if (Input.GetKey( KeyCode.DownArrow ))
+        else if (Input.GetKey( KeyCode.LeftArrow ))
         {
         Vector3 movementL = new Vector3(velocityX,0.0f ,0.0f );
         transform.position -= movementL;
+
+        varManager.FindPlayerIndex();
         }
  
-        if (Input.GetKey( KeyCode.LeftArrow ))
+        if (Input.GetKey( KeyCode.DownArrow ))
         {   
             Vector3 movementR = new Vector3(0.0f,0.0f , velocityZ);
             transform.position -= movementR;
+
+            varManager.FindPlayerIndex();
         }
-         else   if (Input.GetKey( KeyCode.RightArrow ))
+         else   if (Input.GetKey( KeyCode.UpArrow ))
          { 
             Vector3 movementL = new Vector3(0.0f,0.0f , velocityZ);
             transform.position += movementL;
+
+            varManager.FindPlayerIndex();
          }
 
-        varManager.GetPlayerIndex();
+        
 	}
 }
