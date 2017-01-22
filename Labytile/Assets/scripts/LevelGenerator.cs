@@ -8,6 +8,7 @@ public class LevelGenerator : MonoBehaviour {
     public GameObject staticTile = null;
     public GameObject playerObject = null;
     public GameObject portalObject = null;
+    public GameObject enemyObject = null;
 
     public Player GetPlayer() { return player; }
 
@@ -22,6 +23,7 @@ public class LevelGenerator : MonoBehaviour {
         SpawnTiles(pixels);
         SpawnPortal(pixels);
         SpawnPlayer(pixels);
+        SpawnEnemy(pixels);
         
 
             //if (pixels[i].g == 1) // spawn d'ennemi
@@ -151,5 +153,29 @@ public class LevelGenerator : MonoBehaviour {
         }
 
         return tileToReturn;
+    }
+    void SpawnEnemy(Color[] pixels)
+    {
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            int indexX = i % levelTexture.width;
+            int indexZ = i / levelTexture.width;
+
+            if (pixels[i].g == 1)
+            {
+                basicTile tile = GetTileWithIndex(indexX, indexZ);
+                Transform spawnPoint = tile.transform.GetChild(0);
+
+                GameObject enemy = Instantiate(enemyObject, spawnPoint.position, spawnPoint.rotation) as GameObject;
+                //enemyObject.transform.SetParent(spawnPoint);
+
+
+                //return;
+            }
+            else
+            {
+                Debug.Log(pixels[i].g);
+            }
+        }
     }
 }

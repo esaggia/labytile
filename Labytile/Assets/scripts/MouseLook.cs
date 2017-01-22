@@ -4,7 +4,7 @@ using System.Collections;
 public class MouseLook : MonoBehaviour {
 	Vector2 mouseLook;
 	Vector2 smoothV;
-	public float sensitivity =5f;
+	public float sensitivity = 5f;
 	public float smoothing = 2f;
 	GameObject player;
 
